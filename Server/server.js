@@ -1,3 +1,4 @@
+require('dotenv').config(); // Load environment variables from .env file
 const express = require('express');
 const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
@@ -7,9 +8,11 @@ const bcrypt = require('bcryptjs'); // Using bcrypt for password hashing
 const crypto = require('crypto');
 const cors = require('cors');
 
-const jwtPassword = 'RealEstateManagement';
+const port = process.env.PORT || 5000;
+
 const app = express();
 
+// Middleware and configuration
 app.use(cors());
 app.use(express.json());
 
@@ -22,7 +25,7 @@ const verifyToken = (req, res, next) => {
   }
 
   try {
-    const decoded = jwt.verify(token, jwtPassword);
+    const decoded = jwt.verify(token, process.env.JWT_SECRET); // Use the JWT secret from .env
     req.user = decoded;
     next();
   } catch (err) {
@@ -31,10 +34,9 @@ const verifyToken = (req, res, next) => {
 };
 
 // MongoDB Connection
-mongoose.connect(
-  'mongodb+srv://admin:adminram@cluster0.30qmmci.mongodb.net/homeHunters',
-  { useNewUrlParser: true, useUnifiedTopology: true }
-);
+mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => console.log('Connected to MongoDB'))
+  .catch(err => console.error('MongoDB connection error:', err));
 
 // Mongoose Schema & Model
 const UserSchema = new mongoose.Schema({
@@ -63,8 +65,8 @@ const transporter = nodemailer.createTransport({
   secure: true,
   port: 465,
   auth: {
-    user: 'renteasee3@gmail.com',
-    pass: 'qtyrvbudwhjpxgzg',
+    user: process.env.EMAIL_USER, // Use email from .env
+    pass: process.env.EMAIL_PASS, // Use password from .env
   },
 });
 
@@ -108,7 +110,7 @@ app.post('/register', async (req, res) => {
 
   // Send OTP via Email
   const mailOptions = {
-    from: 'renteasee3@gmail.com',
+    from: process.env.EMAIL_USER, // Use email from .env
     to: email,
     subject: 'Email Verification OTP',
     text: `Your OTP is ${otp}`,
@@ -164,7 +166,7 @@ app.post('/resend-otp', async (req, res) => {
 
   // Send the new OTP via email
   const mailOptions = {
-    from: 'renteasee3@gmail.com',
+    from: process.env.EMAIL_USER, // Use email from .env
     to: email,
     subject: 'Resend OTP - Email Verification',
     text: `Your new OTP is ${otp}. It is valid for 1 hour.`,
@@ -197,7 +199,7 @@ app.post('/login', async (req, res) => {
   }
 
   // Generate JWT Token
-  const token = jwt.sign({ email: user.email, name: user.name, userType: user.userType }, jwtPassword, {
+  const token = jwt.sign({ email: user.email, name: user.name, userType: user.userType }, process.env.JWT_SECRET, {
     expiresIn: '1h',
   });
 
@@ -238,7 +240,7 @@ app.post('/forgot-password', async (req, res) => {
 
   // Send OTP via Email
   const mailOptions = {
-    from: 'renteasee3@gmail.com',
+    from: process.env.EMAIL_USER, // Use email from .env
     to: email,
     subject: 'Password Reset OTP',
     text: `Your password reset OTP is ${otp}. It is valid for 1 hour`,
@@ -272,6 +274,6 @@ app.post('/reset-password', async (req, res) => {
 });
 
 // Start the Server
-app.listen(5000, () => {
+app.listen(port, () => {
   console.log('Server is running on port 5000');
 });
