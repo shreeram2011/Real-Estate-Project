@@ -81,6 +81,32 @@ const comparePassword = (password, hashedPassword) => {
   return bcrypt.compareSync(password, hashedPassword); // bcrypt to compare password
 };
 
+// Contact Us Endpoint
+app.post('/api/contact', async (req, res) => {
+  const { firstName, lastName, email, phone, message, subject } = req.body;
+
+  const mailOptions = {
+    from: `${firstName} ${lastName} <${email}>`,
+    to: 'renteasee3@gmail.com',
+    subject: 'New Contact Form Submission',
+    text: `
+      Name: ${firstName} ${lastName}
+      Email: ${email}
+      Phone: ${phone}
+      Subject: ${subject}
+      Message: ${message}
+    `
+  };
+
+  transporter.sendMail(mailOptions, (err) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ msg: 'Failed to send message', error: err.message });
+    }
+    res.status(200).json({ msg: 'Message sent successfully' });
+  });
+});
+
 // Register Endpoint
 app.post('/register', async (req, res) => {
   const { name, email, password, contact, userType } = req.body;
