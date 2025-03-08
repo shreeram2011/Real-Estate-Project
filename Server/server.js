@@ -109,7 +109,7 @@ app.post('/api/contact', async (req, res) => {
 
 // Register Endpoint
 app.post('/register', async (req, res) => {
-  const { name, email, password, contact, userType } = req.body;
+  const { name, email, password, contact, userType, address } = req.body;
 
   // Validation
   try {
@@ -130,8 +130,8 @@ app.post('/register', async (req, res) => {
   const otp = generateOTP();
   const hashedPassword = hashPassword(password);
 
-  // Save user with OTP and hashed password
-  const newUser = new User({ name, email, password: hashedPassword, contact, userType, otp });
+  // Save user with OTP, hashed password, and address
+  const newUser = new User({ name, email, password: hashedPassword, contact, userType, otp, address });
   await newUser.save();
 
   // Send OTP via Email
@@ -231,6 +231,7 @@ app.post('/login', async (req, res) => {
 
   // Set token in response headers
   res.setHeader('Authorization', `Bearer ${token}`);
+
 
   res.status(200).json({ 
     msg: 'Login successful', 
