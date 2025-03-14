@@ -20,7 +20,7 @@ const PropertyList = () => {
 
     try {
       const response = await axios.get(
-        `http://localhost:8080/properties?location=${location}&type=${type}`
+        `https://real-estate-project-2-3ql2.onrender.com/properties?location=${location}&type=${type}`
       );
       setProperties(response.data);
     } catch (error) {
@@ -37,7 +37,7 @@ const PropertyList = () => {
 
   const handlePayment = async (amount, propertyId) => {
     try {
-      const { data } = await axios.post("http://localhost:8080/payment/create-order", {
+      const { data } = await axios.post("https://real-estate-project-2-3ql2.onrender.com/payment/create-order", {
         amount,
       });
 
@@ -55,7 +55,7 @@ const PropertyList = () => {
           }
 
           try {
-            const verifyRes = await axios.post("http://localhost:8080/payment/verify-payment", {
+            const verifyRes = await axios.post("https://real-estate-project-2-3ql2.onrender.com/payment/verify-payment", {
               razorpay_order_id: response.razorpay_order_id,
               razorpay_payment_id: response.razorpay_payment_id,
               razorpay_signature: response.razorpay_signature,
