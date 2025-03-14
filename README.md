@@ -18,7 +18,7 @@
   <li><strong>Frontend:</strong> React, Tailwind CSS</li>
   <li><strong>Backend:</strong> Node.js, Express.js</li>
   <li><strong>Database:</strong> MongoDB</li>
-  <li><strong>Real-Time Communication:</strong> Socket.IO, WebRTC</li>
+  <li><strong>Real-Time Communication:</strong> Socket.IO</li>
   <li><strong>State Management:</strong> React Context API / Redux (if used)</li>
   <li><strong>Authentication:</strong> JWT (JSON Web Token)</li>
   <li><strong>Deployment:</strong> (e.g., Vercel, Netlify, or any other platform used)</li>
