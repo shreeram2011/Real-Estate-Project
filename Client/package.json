@@ -8,8 +8,8 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "start": "cd src/api && node index.js",
-    "install": "npm install"
+    "start": "cd src/api && node index.js"
+    
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
