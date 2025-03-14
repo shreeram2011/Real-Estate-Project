@@ -45,7 +45,7 @@ const VerifyOtp = () => {
     }
 
     try {
-      const response = await axios.post('http://localhost:5000/verify-otp', {
+      const response = await axios.post('https://real-estate-project-8s5o.onrender.com/verify-otp', {
         email,
         otp: otpString
       });
@@ -65,7 +65,7 @@ const VerifyOtp = () => {
 
   const handleResendOtp = async () => {
     try {
-      const response = await axios.post('https://real-estate-project-7gn2.onrender.com/resend-otp', {
+      const response = await axios.post('https://real-estate-project-8s5o.onrender.com/resend-otp', {
         email
       });
       setSuccessMessage(response.data.msg);

@@ -42,7 +42,7 @@ const Register = () => {
     }
 
     try {
-      const response = await axios.post('http://localhost:5000/register', formData);
+      const response = await axios.post('https://real-estate-project-8s5o.onrender.com/register', formData);
       setMessage(response.data.msg);
       localStorage.setItem('userType', formData.userType);
       setTimeout(() => {

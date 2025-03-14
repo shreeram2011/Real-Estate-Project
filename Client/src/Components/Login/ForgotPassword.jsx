@@ -16,7 +16,7 @@ const ForgotPassword = () => {
   const handleSendOTP = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:5000/forgot-password', {
+      const response = await axios.post('https://real-estate-project-8s5o.onrender.com/forgot-password', {
         email
       });
       setMessage(response.data.msg);
@@ -36,7 +36,7 @@ const ForgotPassword = () => {
     }
 
     try {
-      const response = await axios.post('http://localhost:5000/reset-password', {
+      const response = await axios.post('https://real-estate-project-8s5o.onrender.com/reset-password', {
         email,
         otp,
         newPassword

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import io from "socket.io-client";
 
-const socket = io("http://localhost:7000");
+const socket = io("https://real-estate-project-1-d60c.onrender.com");
 
 const ChatPerson = ({ userId }) => {
     const [chats, setChats] = useState([]);
@@ -9,7 +9,7 @@ const ChatPerson = ({ userId }) => {
     const [message, setMessage] = useState("");
 
     useEffect(() => {
-        fetch(`http://localhost:7000/chats?receiverId=${userId}`)
+        fetch(`https://real-estate-project-1-d60c.onrender.com/chats?receiverId=${userId}`)
             .then(res => res.json())
             .then(data => setChats(data))
             .catch(err => console.error(err));
